@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "openai-playground"
+version = "0.1.0"
+description = "testing ground for learning openai"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "openai_playground"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "^1.37.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
