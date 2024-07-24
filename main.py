@@ -5,12 +5,19 @@ from urllib.request import urlretrieve
 
 
 class StoryIllustrator:
-    client: OpenAI
 
-    def __init__(self, client: OpenAI):
-        self.client = client
+    def __init__(self):
+        self.client = OpenAI()
 
     def transcribe_audio(self, input_path: str) -> str:
+        """Take audio of a story and transcribe text using OpenAI whisper-1 model
+
+        args:
+        input_path (str) - path to the audio file
+
+        output (str) - the transcribed audio text
+        """
+
         with open(input_path, "rb") as audio_file:
             transcription = self.client.audio.transcriptions.create(
                 model="whisper-1", file=audio_file
@@ -19,8 +26,17 @@ class StoryIllustrator:
         return transcription.text
 
     def get_prompt(self, transcription: str) -> str:
+        """Get a prompt based on transcript that fits within dall-e prompt limit
+
+        args:
+        transcription (str) - transcribed audio text
+
+        output (str) - a prompt that can be used with dall-e
+        """
+
         summary = transcription.split(".")[0]
 
+        # Add more detail to the prompt for more of a storybook feel
         prompt = (
             f"Generate a children's story illustration for the following: {summary}"
         )
@@ -31,6 +47,14 @@ class StoryIllustrator:
         return prompt
 
     def generate_illustration(self, prompt: str) -> str:
+        """Generate the illustration based on the input prompt
+
+        args:
+        prompt (str) - a prompt for dall-e
+
+        output (str) - the url of the generated illustration
+        """
+
         response = self.client.images.generate(
             model="dall-e-3", prompt=prompt, size="1024x1024", n=1
         )
@@ -39,7 +63,7 @@ class StoryIllustrator:
 
 
 if __name__ == "__main__":
-    illustrator = StoryIllustrator(client=OpenAI())
+    illustrator = StoryIllustrator()
 
     story_data = {}
 
