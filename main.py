@@ -64,9 +64,6 @@ class StoryIllustrator:
             f"Generate a children's story illustration for the following: {summary}"
         )
 
-        # if len(prompt) > 4000:
-        #     prompt = transcription.split(",")[0]
-
         self.prompt = prompt
         return self.prompt
 
@@ -102,20 +99,6 @@ if __name__ == "__main__":
     story_data = illustrator.process_file(
         input_path="audio/input/fables_01_03_aesop.mp3"
     )
-
-    # story_data = {}
-
-    # story_data["transcription"] = illustrator.transcribe_audio(
-    #     input_path="audio/input/fables_01_02_aesop.mp3"
-    # )
-
-    # story_data["summary"] = illustrator.get_prompt(
-    #     transcription=story_data["transcription"]
-    # )
-
-    # story_data["image_url"] = illustrator.generate_illustration(
-    #     prompt=story_data["summary"]
-    # )
 
     print(story_data)
 
